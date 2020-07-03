@@ -8,7 +8,7 @@
 	// delete.jsp?num=x
 	int num=Integer.parseInt(request.getParameter("num"));
 	//DB에서 실제로 삭제한다.
-	TodoDao.getInstence().delete(num);
+	TodoDao.getInstance().delete(num);
 	//응답한다.
 %>
 <!DOCTYPE html>

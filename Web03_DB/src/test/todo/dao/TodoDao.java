@@ -16,7 +16,7 @@ public class TodoDao {
 	//외부에서 객체 생성할수 없도록 생성자의 접근 지정자를 private 로
 	private TodoDao() {}
 	//자신의 참조값을 리턴해주는 static 메소드
-	public static TodoDao getInstence() {
+	public static TodoDao getInstance() {
 		if(dao==null) {// 최초 호출될때는
 			//객체를 생성해서 static 필드에 참조값을 저장해 놓는다.
 			dao=new TodoDao();

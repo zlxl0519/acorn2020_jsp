@@ -13,7 +13,7 @@
 </head>
 <%
 	//TodoDao 객체의 참조값 얻어오기
-	TodoDao dao=TodoDao.getInstence();
+	TodoDao dao=TodoDao.getInstance();
 	List<TodoDto> list=dao.getList();
 %>
 

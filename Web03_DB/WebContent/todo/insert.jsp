@@ -8,7 +8,7 @@
 	request.setCharacterEncoding("utf-8");//한글이 깨지지 않도록 인코딩
 	String work=request.getParameter("work");
 	//	2. DB 에 저장한다.
-	TodoDao dao=TodoDao.getInstence();
+	TodoDao dao=TodoDao.getInstance();
 	if(work!=null){
 		dao.insert(work);
 	}
