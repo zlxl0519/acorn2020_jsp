@@ -3,21 +3,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//1. 폼 전송되는 이름과, 주소를 읽어 온다.
 	request.setCharacterEncoding("utf-8");
+	// input name="name" 여기에 입력한 이름
 	String name=request.getParameter("name");
+	// input name="addr" 여기에 입력한 주소
 	String addr=request.getParameter("addr");
-	
-	MemberDao dao=MemberDao.getInstance();
+	//2. MemberDao 객체를 이용해서 DB에 저장한다.
 	MemberDto dto=new MemberDto();
 	dto.setName(name);
 	dto.setAddr(addr);
-
+	MemberDao dao=MemberDao.getInstance();
+	dao.insert(dto);
+	//3. 응답한다.
 %>
-	
-	
-
-	
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,18 +24,12 @@
 <title>/member/insert.jsp</title>
 </head>
 <body>
+<div class="container">
+	<h1>알림</h1>
+	<p><strong><%=dto.getName() %></strong> 회원의 정보가 추가 되었습니다.
+		<a href="list.jsp">확인</a>
+	</p>
+</div>
 	
-		<script>
-		 if(name!=null){
-		<%dao.insert(dto); %>
-			alert("새로운 회원정보가 저장되었습니다.");
-			location.href="${pageContext.request.contextPath }/member/list.jsp";
-		
-
-		}else{
-			alert("정보를 입력해주세요.");
-			location.href="${pageContext.request.contextPath }/member/list.jsp";
-		}
-		</script>
 </body>
 </html>

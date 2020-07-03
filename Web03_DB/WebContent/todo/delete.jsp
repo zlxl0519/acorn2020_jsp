@@ -20,7 +20,7 @@
 <body>
 	<script>
 		alert("삭제 했습니다.");
-		//javascript 를 이용해서 클라이언트에게 특정 경로로 요청을 다시 하도록 강요하기
+		//javascript 를 이용해서 클라이언트에게 특정 경로로 요청을 다시 하도록 강요하기 //redirect 이동
 		location.href="${pageContext.request.contextPath }/todo/list.jsp";//알림을 하면 바로 저기로 옮겨간다.
 	</script>
 </body>
