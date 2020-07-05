@@ -3,6 +3,7 @@ package test.japan.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,5 +99,105 @@ public class JapanDao {
 			return false;
 		}
 	}
+	
+	//여행지 삭제하는 메소드
+	public boolean delete(int num) {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		int flag=0;
+		try {
+			conn=new DbcpBean().getConn();
+			String sql="delete from japantravel"
+					+ "	where num=?";
+			pstmt=conn.prepareStatement(sql);
+			//? 에 들어갈 값 넣기
+			pstmt.setInt(1, num);
+			flag=pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null)conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(flag>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	//일본여행리스트 수정하는 메소드
+	public boolean update(JapanDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "update japantravel"
+					+ "	set name=?, note=?"
+					+ "	where num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 들어갈 값 넣기
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getNote());
+			pstmt.setInt(3, dto.getNum());
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//리스트중 하나의 데이터를 읽어오는 메소드
+	public JapanDto getDate(int num) {
+		JapanDto dto=null;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			conn=new DbcpBean().getConn();
+			String sql="select num, name, note"
+					+ "	from japantravel"
+					+ "	where num=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				dto=new JapanDto();
+				dto.setNum(rs.getInt("num"));
+				dto.setName(rs.getString("name"));
+				dto.setNote(rs.getString("note"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null)conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return dto;
+	}//getDate ()
 	
 }

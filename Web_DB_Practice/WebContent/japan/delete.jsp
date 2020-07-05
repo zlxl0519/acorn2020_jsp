@@ -1,20 +1,14 @@
+<%@page import="test.japan.dao.JapanDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("utf-8");
 	//1. 요청한 값을 파리미터로 받는다.
-	request.getParameter("num");
-	//2. request contextPath 를 가져온다.
+	int num=Integer.parseInt(request.getParameter("num"));
+	//2. 파리미터 값을 가져와서 삭제한다.
+	JapanDao dao=JapanDao.getInstance();
+	dao.delete(num);
+	//3. 응답 위에 지우는 것을 수행하고 바로 list 로 갈수 있다.
 	String cpath=request.getContextPath();
-	//3. 리다일렉트로 응답한다.
-	response.sendRedirect(cpath+"list.jsp");
+	response.sendRedirect(cpath+"/japan/list.jsp");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
