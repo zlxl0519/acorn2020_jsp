@@ -38,6 +38,8 @@ public class BoardDao {
 			pstmt.setString(2, dto.getTitle());
 			pstmt.setString(3, dto.getContent());
 			flag=pstmt.executeUpdate();
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

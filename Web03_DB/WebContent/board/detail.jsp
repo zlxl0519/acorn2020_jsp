@@ -19,24 +19,28 @@
 <body>
 <div class="container">
 	<h1>글 자세히 보기 페이지 입니다.</h1>
-	<table>
-		<tr>
-			<th>글번호</th>
+	<table class="table table-hover">
+	<colgroup>
+		<col width="10%"/>
+		<col width=""/>
+	</colgroup>
+		<tr class="thead-dark">
+			<th >글번호</th>
 			<td><%=dto.getNum() %></td>
 		</tr>
-		<tr>
+		<tr class="thead-dark">
 			<th>작성자</th>
 			<td><%=dto.getWriter() %></td>
 		</tr>
-		<tr>
+		<tr class="thead-dark">
 			<th>제목</th>
 			<td><%=dto.getTitle() %></td>
 		</tr>
-		<tr>
+		<tr class="thead-dark">
 			<th>내용</th>
-			<td><textarea cols="20" rows="5" disabled><%=dto.getContent() %></textarea></td>
+			<td><textarea cols="100" rows="5" disabled><%=dto.getContent() %></textarea></td>
 		</tr>
-		<tr>
+		<tr class="thead-dark">
 			<td></td>
 			<td>
 				<a href="updateform.jsp?num=<%=dto.getNum() %>">수정</a>

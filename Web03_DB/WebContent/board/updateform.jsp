@@ -13,21 +13,33 @@
 <head>
 <meta charset="UTF-8">
 <title>/board/updateform.jsp</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css" />
 </head>
 <body>
+<div class="container">
+
 	<form action="update.jsp" method="post">
-		<input type="hidden" name="num" value="<%=dto.getNum() %>"/>
-		<label for="num">번호</label>
-		<input type="text" name="num" value="<%=dto.getNum() %>" disabled/><br/>
-		<label for="writer">작성자</label>
-		<input type="text" name="writer" value="<%=dto.getWriter() %>"/><br/>
-		<label for="title">제목</label>
-		<input type="text" name="title" value="<%=dto.getTitle() %>"/><br/>
-		<label for="content">내용</label><br/>
-		<%--textarea 는 <%=%> 이거를 이너텍스트 쓰는 자리에 쓴다. --%>
-		<textarea name="content" id="content" cols="20" rows="5"><%=dto.getContent() %></textarea><br/>
-		<input type="submit" value="수정확인"/>
-		<input type="reset" value="취소"/>
+		<div class="form-group">
+			<input type="hidden" name="num" value="<%=dto.getNum() %>"/>
+			<label for="num">번호</label>
+			<input class="form-control" type="text" name="num" value="<%=dto.getNum() %>" disabled/><br/>
+		</div>
+		<div class="form-group">
+			<label for="writer">작성자</label>
+			<input class="form-control" type="text" name="writer" value="<%=dto.getWriter() %>"/><br/>
+		</div>
+		<div class="form-group">
+			<label for="title">제목</label>
+			<input class="form-control" type="text" name="title" value="<%=dto.getTitle() %>"/><br/>
+		</div>
+		<div class="form-group">
+			<label for="content">내용</label><br/>
+			<%--textarea 는 <%=%> 이거를 이너텍스트 쓰는 자리에 쓴다. --%>
+			<textarea class="form-control" name="content" id="content" cols="20" rows="5"><%=dto.getContent() %></textarea><br/>
+		</div>
+		<input class="btn btn-primary" type="submit" value="수정확인"/>
+		<input class="btn btn-warning" type="reset" value="취소"/>
 	</form>
+</div>
 </body>
 </html>
