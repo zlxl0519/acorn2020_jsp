@@ -16,26 +16,49 @@
 <head>
 <meta charset="UTF-8">
 <title>/member/updateform.jsp</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css" />
 </head>
 <body>
+<div class="navbar navbar-expand-sm navbar-dark bg-primary">
+	<a class="navbar-brand" href="${pageContext.request.contextPath }">Acorn</a>
+	<ul class="navbar-nav">
+		<li class="nav-item">
+			<a class=" nav-link active" href="${pageContext.request.contextPath }/member/list.jsp" >Member</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link " href="${pageContext.request.contextPath }/todo/list.jsp" >Todo</a>
+		</li>
+	</ul>
+</div>
 	<div class="container">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="../index.jsp">Home</a></li>
+			<li class="breadcrumb-item"><a href="list.jsp">회원목록</a></li>
+			<li class="breadcrumb-item active">수정양식</li>
+		</ol>
 		<h1>회원정보 수정 폼 입니다.</h1>
 		<form action="update.jsp" method="post">
 			<%-- jsp 페이지에서의 주석  이거는 클라이언트 웹브라우저에서 해석하지 않는 주석이다.--%>
 			<%-- form 을 제출했을때 회원의 번호가 전송되도록 input type="hidden" 
 				에 회원 번호를 출력해 놓는다.--%>
 			<input type="hidden" name="num" value="<%=dto.getNum() %>" />
-			<label for="num">번호</label>
-			<!-- 클라이언트 웹브라우저에서 소스보기를 하면 보인다. -->
-			<!-- disabled 속성이 추가된 input 요소는 수정이 불가하고 form 을
-				제출했을때 전송도 되지 않는다. -->
-			<input type="text" id="num" value="<%=dto.getNum() %>" disabled/><br/>
-			<label for="name">이름</label>
-			<input type="text" name="name" id="name" value="<%=dto.getName() %>"/><br/>
-			<label for="addr">주소</label>
-			<input type="text" name="addr" id="addr" value="<%=dto.getAddr() %>" /><br/>
-			<button type="submit">수정</button>
-			<button type="reset">취소</button>
+			<div class="form-group">
+				<label for="num">번호</label>
+				<!-- 클라이언트 웹브라우저에서 소스보기를 하면 보인다. -->
+				<!-- disabled 속성이 추가된 input 요소는 수정이 불가하고 form 을
+					제출했을때 전송도 되지 않는다. -->
+				<input class="form-control" type="text" id="num" value="<%=dto.getNum() %>" disabled/><br/>
+			</div>
+			<div class="form-group">
+				<label for="name">이름</label>
+				<input class="form-control" type="text" name="name" id="name" value="<%=dto.getName() %>"/><br/>
+			</div>
+			<div class="form-group">
+				<label for="addr">주소</label>
+				<input class="form-control" type="text" name="addr" id="addr" value="<%=dto.getAddr() %>" /><br/>
+			</div>
+			<button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
+			<button class="btn btn-outline-warning btn-sm" type="reset">취소</button>
 		</form>
 	</div>
 </body>

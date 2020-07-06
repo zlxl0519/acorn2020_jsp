@@ -22,12 +22,14 @@
 <head>
 <meta charset="UTF-8">
 <title>/member/insert.jsp</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css" />
 </head>
 <body>
 <div class="container">
 	<h1>알림</h1>
-	<p><strong><%=dto.getName() %></strong> 회원의 정보가 추가 되었습니다.
-		<a href="list.jsp">확인</a>
+	<p class="alert alert-success">
+		<strong><%=dto.getName() %></strong> 회원의 정보가 추가 되었습니다.
+		<a class="alert-link" href="list.jsp">확인</a>
 	</p>
 </div>
 	
