@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css" />
 </head>
 <body>
-	<h1>인테스 페이지 입니다.</h1>
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<a href="${pageContext.request.contextPath}/index.jsp" class="navbar-brand mb-0 h1"" >
 			Japan Travel
@@ -25,5 +24,11 @@
 			</ul>
 		 </div>
 	</nav>
+	<div class="container">
+		<ul>
+			<li><a href="${pageContext.request.contextPath }/japan/list.jsp ">일본여행지 목록</a></li>
+		</ul>
+	
+	</div>
 </body>
 </html>
