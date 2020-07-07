@@ -3,6 +3,7 @@ package test.board.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class BoardDao {
 		PreparedStatement pstmt=null;
 		int flag=0;
 		try {
+			//Connection Pool 에서 Connection 객체를 하나 가지고 온다.
 			conn=new DbcpBean().getConn();
 			String sql="insert into board_guest"
 					+ "	(num, writer, title, content, regdate)"
@@ -43,7 +45,14 @@ public class BoardDao {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			
+			try {
+				if(pstmt!=null)pstmt.close();
+				
+				if(conn!=null)conn.close();//Connection 반납하기
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
 		}
 		if(flag>0) {
 			return true;

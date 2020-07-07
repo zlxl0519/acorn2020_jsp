@@ -1,12 +1,13 @@
 package test.util;
 /*
- * 	[ Data Base Connection Pool Bean ]
-*	
-*	아래의 킆래스가 동작 하려면
-*	
-*	1. Servers/ context.xml 문서에 DB 접속 정보가 있어야 한다.
-*	
-*	<Resource name="jdbc/myoracle" auth="Container"
+  	[ Data Base Connection Pool Bean ]
+
+	
+	아래의 킆래스가 동작 하려면
+	
+	1. Servers/ context.xml 문서에 DB 접속 정보가 있어야 한다.
+	
+	<Resource name="jdbc/myoracle" auth="Container"
               type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
               url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
               username="scott" password="tiger" maxTotal="20" maxIdle="10"
@@ -28,7 +29,7 @@ package test.util;
 	- new DbcpBean().getConn() 메소드를 호출하면 Connection pool 에서
 	Connection 객체가 하나 리턴된다.
 	
-	- Dao 에서 Connection 객체를 사용한수 .close() 메소드를 호출하면
+	- Dao 에서 Connection 객체를 사용한후 .close() 메소드를 호출하면
 	자동으로 Connection pool 에 Connection 객체가 반환된다.
  */
 
@@ -47,7 +48,9 @@ public class DbcpBean {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
+			// jdbc/myoracle 이라는 이름의 DataSource(Connection pool) 에서
 			DataSource ds = (DataSource)envContext.lookup("jdbc/myoracle");
+			// Connection 객체를 하나 가지고 온다.
 			conn = ds.getConnection();
 		}catch(Exception e) {
 			e.printStackTrace();
