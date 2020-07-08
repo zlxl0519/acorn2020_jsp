@@ -13,6 +13,7 @@
 </head>
 <body>
 	<%@include file="header.jsp" %>
+	
 	<h1>main.jsp 페이지 입니다.</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta exercitationem esse eum velit laborum. Dicta dignissimos culpa aut vero at soluta? Dicta sunt reprehenderit sit itaque eaque rem dolorum quod!</p>
 	<a href="other.jsp">다른 페이지</a>
