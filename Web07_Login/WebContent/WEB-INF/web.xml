@@ -10,10 +10,33 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  
   <resource-ref>
 		<description>Oracle Datasource example</description>
 		<res-ref-name>jdbc/myoracle</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+  
+  <filter>
+  <!-- 인코딩 필터 정의하기(Tomcat 웹서버에 알리기) -->
+  	<filter-name>EncodingFilter</filter-name>
+  	<filter-class>test.filter.EncodingFilter</filter-class>
+  	<!-- 필터 초기화 파라미터 정의 하기 encoding : utf-8 -->
+  	<!-- 필터를 좀더 세밀하게 만들었을 뿐 -->
+  	<init-param><!-- 이것을 써놓는것만으로 읽어들여서 바로 인코딩을 바꿔준다. 
+  		class 로 만들어서 하는것보다 간단하기 때문에, class 에서 변경한다는것은 소스코드를 다 바꾸고 컴파일러를 다시해야된다는 것이라서 더 복잡하다. 
+  		-->
+  		<!-- key 값 -->
+  		<param-name>encoding</param-name>
+  		<!-- value 값 -->
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <!-- 인코딩 필터 맵핑하기(어떤 요청에 대해서 필터가 동작할지 알리기) -->
+  <filter-mapping>
+  	<filter-name>EncodingFilter</filter-name><!-- filter에 filter-name 과 같다 -->
+  	<url-pattern>/*</url-pattern><!--/*  최상위요청하위에 모든요청이 적용된다. -->
+  </filter-mapping>
 </web-app>

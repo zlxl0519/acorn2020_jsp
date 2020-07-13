@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 	<%if(id != null){ %>
-		<p><a href="users/info.jsp"><%=id %></a> 님 로그인중...
+		<p><a href="users/private/info.jsp"><%=id %></a> 님 로그인중...
 			<a href="users/logout.jsp">로그아웃</a>
 		</p>
 		
@@ -23,6 +23,7 @@
 	<ul>
 		<li><a href="users/signup_form.jsp">회원가입</a></li>
 		<li><a href="users/loginform.jsp">로그인</a></li>
+		<li><a href="test/buy.jsp?code=111">1번 상품 구입 테스트</a></li>
 	</ul>
 </div>
 </body>
