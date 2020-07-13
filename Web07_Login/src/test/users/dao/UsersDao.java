@@ -19,6 +19,42 @@ public class UsersDao {
 		return dao;
 	}
 	
+	//비밀번호를 수정 반영하는 메소드
+	public boolean updatePwd(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 준비하기 
+			String sql = "update users"
+					+ "	set pwd=?"
+					+ "	where id=? and pwd=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩 할 값이 있으면 바인딩한다.
+			pstmt.setString(1, dto.getNewPwd());
+			pstmt.setString(2, dto.getId());
+			pstmt.setString(3, dto.getPwd());// 예전 비밀번호
+			//sql  문 수행하고 update or insert or delete 된 row 의 갯수 리턴받기 
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	//UsersDto 객체에 있는 id, pwd 가 유효한 정보인지 여부를 리턴하는 메소드
 	public boolean isValid(UsersDto dto) {
 		//유효한 정보인지 여부를 담을 지역변수 만들고 초기값 false 부여하기
@@ -63,37 +99,37 @@ public class UsersDao {
 	}//isValid 종료
 	
 	//인자로 전달되는 id 를 삭제하는 메소드
-		public boolean delete(String id) {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			int flag = 0;
+	public boolean delete(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 준비하기 
+			String sql = "delete from users"
+					+ "	where id=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩 할 값이 있으면 바인딩한다.
+			pstmt.setString(1, id);
+			//sql  문 수행하고 update or insert or delete 된 row 의 갯수 리턴받기 
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 			try {
-				conn = new DbcpBean().getConn();
-				//실행할 sql 문 준비하기 
-				String sql = "delete from users"
-						+ "	where id=?";
-				pstmt = conn.prepareStatement(sql);
-				//? 에 바인딩 할 값이 있으면 바인딩한다.
-				pstmt.setString(1, id);
-				//sql  문 수행하고 update or insert or delete 된 row 의 갯수 리턴받기 
-				flag = pstmt.executeUpdate();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
 			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (pstmt != null)
-						pstmt.close();
-					if (conn != null)
-						conn.close();
-				} catch (Exception e) {
-				}
-			}
-			if (flag > 0) {
-				return true;
-			} else {
-				return false;
 			}
 		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	//인자로 전달되 id 에 해당하는 정보를 리턴하는 메소드
 	public UsersDto getData(String id) {
