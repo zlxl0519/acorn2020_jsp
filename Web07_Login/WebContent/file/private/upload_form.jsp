@@ -18,6 +18,7 @@
 	<form action="upload.jsp" method="post" enctype="multipart/form-data">
 		<label for="title">제목(설명)</label>
 		<input type="text" name="title" id="title" /><br/>
+		<%--파일명도 있지만 첨부파일명도 있다. --%>
 		<label for="myFile">첨부 파일</label>
 		<input type="file" name="myFile" id="myFile" /><br/>
 		<button type="submit">업로드</button>
