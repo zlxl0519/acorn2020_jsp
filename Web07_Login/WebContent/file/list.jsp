@@ -13,6 +13,8 @@
 <%
 	//파일 목록
 	List<FileDto> list=FileDao.getInstance().getList();
+	//로그인 된 아이디 읽어오기 (로그인을 하지 않으면 null 이다)
+	String id=(String)session.getAttribute("id");
 %>
 <div class="container">
 	<h1>파일 목록입니다.</h1>
@@ -25,6 +27,7 @@
 				<th>파일명</th>
 				<th>파일크기</th>
 				<th>등록일</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +39,12 @@
 				<td><a href="download.jsp?num=<%=tmp.getNum() %>"><%=tmp.getOrgFileName() %></a></td>
 				<td><%=tmp.getFileSize() %></td>
 				<td><%=tmp.getRegdate() %></td>
+				<%--다른 사람이 올린것을 못지우게 하기 위해 조건부로 링크를 달 필요가 있다. --%>
+				<td>
+					<%if(tmp.getWriter().equals(id)){ //id.equals(tmp.getWriter()) 은 id가 null인 경우도 있으니까 nullpointexception이 발생할수 있다.%>
+						<a href="private/delete.jsp?num=<%=tmp.getNum() %>">삭제</a>
+					<%} %>			
+				</td>
 			</tr>
 		<%} %>
 		</tbody>
