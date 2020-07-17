@@ -71,7 +71,7 @@
                 	//파일을 파일시스템에 저장한다.
                     File storeFile = new File(filePath);
                     item.write(storeFile);
-                    //업로드 폴더에 저장되는 것
+                    //파일을 파일시스템에 저장되는 것
                     
                     //이미지 경로
                     imageSrc="/upload/"+saveFileName;
