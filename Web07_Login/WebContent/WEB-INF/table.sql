@@ -1,3 +1,13 @@
+create table board_gallery(
+	num number primary key,
+	writer varchar2(100),
+	caption varchar2(100),
+	imagePath varchar2(100),
+	regdate date
+);
+
+create sequence board_gallery_seq;
+
 -- upload 된 파일의 정보를 저장할 테이블
 -- 파일명이 겹치지 않도록 서버에 저장되는 파일명을 다르게 한다.
 create table board_file(
