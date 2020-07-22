@@ -1,3 +1,14 @@
+create table board_cafe(
+	num number primary key,
+	writer varchar2(100) not null,
+	title varchar2(100) not null,
+	content CLOB,
+	viewCount number, -- 조회수
+	regdate date 
+);
+
+create sequence board_cafe.seq;
+
 create table board_gallery(
 	num number primary key,
 	writer varchar2(100),
