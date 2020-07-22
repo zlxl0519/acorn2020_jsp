@@ -49,6 +49,7 @@
 	int pageNum=1;
 	//보여줄 페이지의 번호가 파라미터로 전달되는지 읽어와 본다.	
 	String strPageNum=request.getParameter("pageNum");
+	String condition=request.getParameter("condition");
 	if(strPageNum != null){//페이지 번호가 파라미터로 넘어온다면
 		//페이지 번호를 설정한다.
 		pageNum=Integer.parseInt(strPageNum);
@@ -63,11 +64,11 @@
 	*/
 	String keyword=request.getParameter("keyword");
 	if(keyword==null){//전달된 키워드가 없다면
-		keyword=""; //빈 문자열을 넣어준다.
+		condition="";
+		keyword="";//빈 문자열을 넣어준다.
 	}
 	//인코딩된 키워드를 미리 만들어 둔다.
 	String encodedK=URLEncoder.encode(keyword);
-	String condition=request.getParameter("condition");
 	//검색 키워드와 startRowNum, endRowNum 을 담을 FileDto 객체 생성
 	FileDto dto=new FileDto();
 	dto.setStartRowNum(startRowNum);
@@ -95,16 +96,15 @@
 			totalRow=FileDao.getInstance().getCountW(dto);
 		}
 	}else{//검색 키워드가 없으면 전체 목록을 얻어온다.
-		condition="";
-		keyword="";
+		
 		list=FileDao.getInstance().getList(dto); // startRowNum, endRowNum 만 있는 list
 		totalRow=FileDao.getInstance().getCount();
 	}
 	
-	//전체 페이지의 갯수 구하기
+	//전체 페이지의 갯수 구하기 //나눈것의 실수를 정수값으로 올림해서 사용한다는뜻 // 실수를 나오게하려면 정수 나누기 실수를 해야되서 나누는건 double로 우선 캐스팅
 	int totalPageCount=
 			(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-	//시작 페이지 번호
+	//시작 페이지 번호 //1,2,3이든 page_display_count 가 5 이면 0 // 정수 정수끼리 나누면 정수이기때문
 	int startPageNum=
 		1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 	//끝 페이지 번호
