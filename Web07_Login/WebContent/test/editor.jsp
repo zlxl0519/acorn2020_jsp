@@ -34,7 +34,7 @@
 	1. WebContent 에 SmartEditor  폴더를 복사해서 붙여 넣기
 	2. WebContent 에 upload 폴더 만들어 두기
 	3. WebContent/WEB-INF/lib 폴더에 
-	   commons-io.jar 파일과 commons-fileupload.jar 파일 붙여 넣기
+	   commons-io.jar 파일과 commons-fileupload.jar 파일 붙여 넣기 -> 이 파일들이 없으면 이미지 업로드가 안된다.
 	4. <textarea id="content" name="content"> 
 	   content 가 아래의 javascript 에서 사용 되기때문에 다른 이름으로 바꾸고 
 	      싶으면 javascript 에서  content 를 찾아서 모두 다른 이름으로 바꿔주면 된다. 
