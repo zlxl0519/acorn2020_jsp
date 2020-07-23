@@ -7,7 +7,7 @@ create table board_cafe(
 	regdate date 
 );
 
-create sequence board_cafe.seq;
+create sequence board_cafe_seq;
 
 create table board_gallery(
 	num number primary key,
