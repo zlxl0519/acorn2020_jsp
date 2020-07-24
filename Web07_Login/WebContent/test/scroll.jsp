@@ -47,8 +47,8 @@
 		var windowHeight=$(window).height();
 		//document(문서)의 높이
 		var documentHeight=$(document).height();
-		//바닥까지 스크롤 되었는지 여부
-		var isBottom =scrollTop+windowHeight == documentHeight;
+		//바닥까지 스크롤 되었는지 여부 
+		var isBottom =scrollTop+windowHeight +10 >= documentHeight;
 		if(isBottom){//만일 바닥까지 스크롤 했다면...
 			//로딩 이미지를 띄우고
 			$(".loader").show();

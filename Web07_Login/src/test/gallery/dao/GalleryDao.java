@@ -20,6 +20,43 @@ public class GalleryDao {
 		}
 		return dao;
 	}
+	//전체 row 의 갯수를 리턴하는 메소드
+	public int getCount() {
+		int count=0;
+		//필요한 객체의 참조값을 담을 지역변수 만들기 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			//Connection 객체의 참조값 얻어오기 
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 준비하기
+			String sql = "select nvl(max(rownum), 0) as count"
+					+ "	from board_gallery";
+			pstmt = conn.prepareStatement(sql);
+			//sql 문에 ? 에 바인딩할 값이 있으면 바인딩하고 
+
+			//select 문 수행하고 결과 받아오기 
+			rs = pstmt.executeQuery();
+			//반복문 돌면서 결과 값 추출하기 
+			if (rs.next()) {
+				count=rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return count;
+	}
 	
 	//이미지 정보를 DB 에 저장하는 메소드
 	public boolean insert(GalleryDto dto) {
@@ -58,7 +95,7 @@ public class GalleryDao {
 	}
 	
 	//이미지 목록을 리턴하는 메소드
-	public List<GalleryDto> getList(){
+	public List<GalleryDto> getList(GalleryDto dto){
 		List<GalleryDto> list=new ArrayList<>();
 		//필요한 객체의 참조값을 담을 지역변수 만들기 
 		Connection conn = null;
@@ -68,23 +105,30 @@ public class GalleryDao {
 			//Connection 객체의 참조값 얻어오기 
 			conn = new DbcpBean().getConn();
 			//실행할 sql 문 준비하기
-			String sql = "select num, writer, caption, imagePath, regdate"
-					+ "	from board_gallery"
-					+ "	order by num desc";
+			String sql = "select *"
+					+ "	from"
+					+ "		(select result1.*, rownum as rnum"
+					+ "		from"
+					+ "			(select num, writer, caption, imagePath, regdate"
+					+ "			from board_gallery"
+					+ "			order by num desc) result1)"
+					+ "	where rnum between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			//sql 문에 ? 에 바인딩할 값이 있으면 바인딩하고 
-
+			pstmt.setInt(1, dto.getStartRowNum());
+			pstmt.setInt(2, dto.getEndRowNum());
 			//select 문 수행하고 결과 받아오기 
 			rs = pstmt.executeQuery();
 			//반복문 돌면서 결과 값 추출하기 
 			while (rs.next()) {
-				GalleryDto dto=new GalleryDto();
-				dto.setNum(rs.getInt("num"));
-				dto.setWriter(rs.getString("writer"));
-				dto.setCaption(rs.getString("caption"));
-				dto.setImagePath(rs.getString("imagePath"));
-				dto.setRegdate(rs.getString("regdate"));
-				list.add(dto);
+				GalleryDto tmp=new GalleryDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setCaption(rs.getString("caption"));
+				tmp.setImagePath(rs.getString("imagePath"));
+				tmp.setRegdate(rs.getString("regdate"));
+				
+				list.add(tmp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
