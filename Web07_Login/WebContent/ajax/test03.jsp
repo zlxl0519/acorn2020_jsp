@@ -16,7 +16,7 @@
 <script src="${pageContext.request.contextPath }/js/jquery-3.5.1.js"></script>
 <script>
 	//버튼을 누르면 form 에 submit 이벤트가 일어나면서 제출되는것
-	$("#myForm").on("submit", function(){
+	$("#myForm").on("submit", function(){//.attr 은 속성의 값을 가져오거나 속성을 추가할때 사용
 		var action=$(this).attr("action");//action 속성의 value 값
 		var method=$(this).attr("method");//method 속성의 value 값
 		//email=xxx&phone=xxx 형식의 문자열이 읽어와진다.
