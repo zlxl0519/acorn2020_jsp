@@ -30,7 +30,7 @@
 				console.log(data);
 			}
 		});
-		return false;//폼 전송을 강제로 막아 버리기
+		return false;//폼 전송을 강제로 막아 버리기 //form 으로 제출할때 jsp 페이지가 안넘어가게 한다.
 	});
 </script>
 </body>
