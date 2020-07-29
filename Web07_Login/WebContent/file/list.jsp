@@ -4,6 +4,8 @@
 <%@page import="test.file.dto.FileDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,6 +95,16 @@
 	if(totalPageCount < endPageNum){
 		endPageNum=totalPageCount; //보정해준다. 
 	}
+	
+	//EL 에서 사용할 값을 미리 request 에 담아두기
+	request.setAttribute("list", list);
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
+	request.setAttribute("condition", condition);
+	request.setAttribute("keyword", keyword);
+	request.setAttribute("encodedK", encodedK);
 %>
 <div class="container">
 	<a href="private/upload_form.jsp">파일 업로드</a>
@@ -110,39 +122,41 @@
 			</tr>
 		</thead>
 		<tbody>
-		<%for(FileDto tmp:list){ %>
+		<c:forEach var="tmp" items="${list }">
 			<tr>
-				<td><%=tmp.getNum() %></td>
-				<td><%=tmp.getWriter() %></td>
-				<td><%=tmp.getTitle() %></td>
-				<td><a href="download.jsp?num=<%=tmp.getNum() %>"><%=tmp.getOrgFileName() %></a></td>
-				<td><%=tmp.getFileSize() %></td>
-				<td><%=tmp.getRegdate() %></td>
-				<%--다른 사람이 올린것을 못지우게 하기 위해 조건부로 링크를 달 필요가 있다. --%>
+				<td>${tmp.num }</td>
+				<td>${tmp.writer }</td>
+				<td>${tmp.title }</td>
+				<td><a href="download.jsp?num=${tmp.num }">${tmp.orgFileName }</a></td>
+				<td><fmt:formatNumber value="${tmp.fileSize }" pattern="#,###"/>byte</td>
+				<td>${tmp.regdate }</td>
 				<td>
-					<%if(tmp.getWriter().equals(id)){ //id.equals(tmp.getWriter()) 은 id가 null인 경우도 있으니까 nullpointexception이 발생할수 있다.%>
-						<a href="private/delete.jsp?num=<%=tmp.getNum() %>">삭제</a>
-					<%} %>			
+					<c:if test="${tmp.writer eq id }">
+						<a href="private/delete.jsp?num=${tmp.num }">삭제</a>
+					</c:if>
 				</td>
 			</tr>
-		<%} %>
+		</c:forEach>
 		</tbody>
 	</table>
 	<div class="page-display">
 		<ul class="pagination pagination-sm">
-		<%if(startPageNum != 1){ %>
-			<li class="page-item"><a class="page-link" href="list.jsp?pageNum=<%=startPageNum-1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Prev</a></li>
-		<%} %>
-		<%for(int i=startPageNum; i<=endPageNum; i++){ %>
-			<%if(i==pageNum){ %>
-				<li class="page-item active"><a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a></li>
-			<%}else{%>
-				<li class="page-item"><a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition %>&keyword=<%=encodedK %>"><%=i %></a></li>
-			<%} %>
-		<%} %>	
-		<%if(endPageNum < totalPageCount){ %>
-			<li class="page-item"><a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1 %>&condition=<%=condition %>&keyword=<%=encodedK %>">Next</a></li>
-		<%} %>
+		<c:if test="${startPageNum ne 1 }">
+			<li class="page-item"><a class="page-link" href="list.jsp?pageNum=${startPageNum-1 }&condition=${conditon }&keyword=${encodedK }">Prev</a></li>
+		</c:if>
+		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }"><%--디폴트 값으로 1씩 증가한다. --%>
+			<c:choose>
+				<c:when test="${i eq pageNum }">
+					<li class="page-item active"><a class="page-link" href="list.jsp?pageNum=${i }&condition=${conditon }&keyword=${encodedK }">${i }</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="list.jsp?pageNum=${i }&condition=${conditon }&keyword=${encodedK }">${i }</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${endPageNum lt totalPageCount }">
+			<li class="page-item"><a class="page-link" href="list.jsp?pageNum=${endPageNum+1 }&condition=${conditon }&keyword=${encodedK }">Next</a></li>
+		</c:if>
 		</ul>
 	</div>
 	<hr style="clear:left; margin-top:10px"/>
@@ -150,11 +164,11 @@
 	<form action="list.jsp" method="get">
 		<label for="condition">검색조건</label>
 		<select name="condition" id="condition">
-			<option value="title_filename" <%if(condition.equals("title_filename")){ %>selected<%} %>>제목+파일명</option>
-			<option value="title" <%if(condition.equals("title")){ %>selected<%} %>>제목</option>
-			<option value="writer" <%if(condition.equals("writer")){ %>selected<%} %>>작성자</option>
+			<option value="title_filename" <c:if test="${conditon eq 'title_filename' }">selected</c:if>>제목+파일명</option>
+			<option value="title" <c:if test="${conditon eq 'title' }">selected</c:if>>제목</option>
+			<option value="writer" <c:if test="${conditon eq 'writer' }">selected</c:if>>작성자</option>
 		</select>
-		<input value="<%=keyword %>" type="text" name="keyword" placeholder="검색어..." />
+		<input value="${keyword }" type="text" name="keyword" placeholder="검색어..." />
 		<button type="submit">검색</button>
 	</form>
 </div>
