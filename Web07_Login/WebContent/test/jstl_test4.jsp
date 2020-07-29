@@ -36,5 +36,18 @@
 		</c:choose>
 		입니다.
 	</p>
+	
+	<p>
+		<strong>${jumsu }</strong>는
+		<c:choose>
+			<c:when test="${jumsu%2 eq 0 }"><%--if --%>
+				<strong>짝수</strong>
+			</c:when>
+			<c:otherwise><%--else --%>
+				<strong>홀수</strong>
+			</c:otherwise>
+		</c:choose>
+	</p>
+	<a href="jstl_test5.jsp">다음예제</a>
 </body>
 </html>
