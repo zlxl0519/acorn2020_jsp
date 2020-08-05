@@ -21,7 +21,7 @@ public class FileServlet extends HttpServlet{
 		//2. 비즈니스 로직의 수행결과 데이터(모델) 을 request 영역에 담고
 		req.setAttribute("dto", dto);
 		//3. view 페이지(jsp)로 forward 이동해서 응답
-		RequestDispatcher rd=req.getRequestDispatcher("/views/file/dtail.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("/WEB-INF/views/file/dtail.jsp");
 		rd.forward(req, resp);
 	}
 }

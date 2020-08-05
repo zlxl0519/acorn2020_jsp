@@ -23,7 +23,7 @@ public class TodoServlet extends HttpServlet{
 		// todoList 라는 키값으로 List<String> type 담기
 		req.setAttribute("todoList", todoList);
 		//3. view 페이지로 forward 이동해서 응답하기
-		RequestDispatcher rd=req.getRequestDispatcher("/views/todo/list.jsp");
+		RequestDispatcher rd=req.getRequestDispatcher("/WEB-INF/views/todo/list.jsp");
 		rd.forward(req, resp);
 	}
 }
